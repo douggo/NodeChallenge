@@ -6,8 +6,8 @@ interface ICriaClienteDTO {
 
 interface IClientesRepository {
   create({ nome }: ICriaClienteDTO): Promise<void>;
-  getAll(): Promise<void>;
-  findById(clienteId: string): Cliente;
+  getAll(): Promise<Cliente[]>;
+  findById(clienteId: number): Promise<Cliente>;
 };
 
 export { ICriaClienteDTO, IClientesRepository };

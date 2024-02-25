@@ -1,31 +1,55 @@
 import { QueryResultRow } from "pg";
 import { Cliente } from "../../models/Cliente";
 import { IClientesRepository, ICriaClienteDTO } from "../IClientesRepository";
-import { PostgreSQLQuery } from "./PostgreSQLQuery";
+import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
+import { error } from "console";
 
+interface ClienteDB {
+  id: string,
+  nome: string
+};
 
 class ClientesPostgreSQLRepository implements IClientesRepository {
 
   private static TABLENAME:string = "clientes";
-  private static COLUMNS: string[] = [ "nome" ];
+  private static COLUMNS: string[] = [ "id", "nome" ];
 
   constructor(private database: PostgreSQLQuery) {}
 
   async create(valores: ICriaClienteDTO): Promise<void> {
-    const result:QueryResultRow = await 
+    const result: QueryResultRow = await 
       this.database.insertData(
         ClientesPostgreSQLRepository.TABLENAME, 
-        ClientesPostgreSQLRepository.COLUMNS, 
+        ClientesPostgreSQLRepository.COLUMNS.filter((value: string, indice: number) => value != "id"), 
         [valores.nome]
       );
   };
 
-  async getAll(): Promise<void> {
-    //const result:QueryResultRow = await this.database.queryStatement("SELECT * FROM clientes", []);
+  async getAll(): Promise<Cliente[]> {
+    const result: any[] = await this.database.selectData(
+      ClientesPostgreSQLRepository.TABLENAME,
+      ClientesPostgreSQLRepository.COLUMNS,
+      ''
+    );
+    const clientes: Cliente[] = result.map((clienteDados: ClienteDB, indice) => {
+      return new Cliente(clienteDados.id, clienteDados.nome);
+    });
+    return clientes;
   };
   
-  findById(clienteId: string): Cliente {
-    throw new Error("Method not implemented.");
+  async findById(clienteId: number): Promise<Cliente> {
+    const result: any[] = await this.database.selectData(
+      ClientesPostgreSQLRepository.TABLENAME,
+      ClientesPostgreSQLRepository.COLUMNS,
+      `AND id = ${clienteId}`
+    );
+    const cliente: Cliente|undefined = result.map((clienteDados: ClienteDB, indice) => {
+      return new Cliente(clienteDados.id, clienteDados.nome);
+    }).shift();
+    if (cliente == undefined) {
+      throw error('Usuário não existe!');
+    }
+    return cliente;
   };
 
 }

@@ -6,7 +6,7 @@ class ImportaDadosDoClienteUseCase {
 
   constructor(private criaClienteService: CriaClienteService, /*private importaContratosService: ImportaContratosService*/) {}
 
-  execute(contratos: ICriaContratosDTO[]): void {
+  async execute(contratos: ICriaContratosDTO[]): Promise<void> {
     this.criaClienteService.criaUsuario({ nome: "Maria" });
     //this.importaContratosService.importaContratos(contratos);
   }

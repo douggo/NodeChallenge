@@ -1,5 +1,5 @@
 import { ClientesPostgreSQLRepository } from "../../repositories/postgresql/ClientesPostgreSQLRepository";
-import { PostgreSQLQuery } from "../../repositories/postgresql/PostgreSQLQuery";
+import { PostgreSQLQuery } from "../../repositories/postgresql/database/PostgreSQLQuery";
 import { ImportaDadosDoClienteController } from "./ImportaDadosDoClienteController";
 import { ImportaDadosDoClienteUseCase } from "./ImportaDadosDoClienteUseCase";
 import { CriaClienteService } from "./services/CriaClienteService";
