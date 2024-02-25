@@ -2,12 +2,11 @@ import { IClientesRepository, ICriaClienteDTO } from "../../../repositories/ICli
 
 class CriaClienteService {
 
-  constructor(private clienteRepositoru: IClientesRepository) {}
+  constructor(private clienteRepository: IClientesRepository) {}
 
   criaUsuario({ nome }: ICriaClienteDTO) {
-
+    this.clienteRepository.create({ nome });
   }
-
 
 }
 

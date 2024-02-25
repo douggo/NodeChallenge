@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { importaDadosDoClienteUseCase } from "./ImportaDadosDoClienteUseCase";
+import { ImportaDadosDoClienteUseCase } from "./ImportaDadosDoClienteUseCase";
 
 class ImportaDadosDoClienteController {
 
-  constructor(private importaDadosDoClienteUseCase: importaDadosDoClienteUseCase) {}
+  constructor(private importaDadosDoClienteUseCase: ImportaDadosDoClienteUseCase) {}
 
   handle(request: Request, response: Response): Response {
     this.importaDadosDoClienteUseCase.execute(request.body);
