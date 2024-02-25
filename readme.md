@@ -66,7 +66,7 @@ Ao finalizar a execução dos comandos acima, teremos o sistema rodando localmen
 
 ## Para subir o projeto com o docker-compose.yml
 
-Seção será desenvolvida assim que o desenvolvimento do back end for concluído, pois o docker-compose é indicado para o gerenciamento de múltiplos containers, sendo no caso um container contendo a aplicação do crediário e outro container com o banco de dados rodando.
+Seção será desenvolvida assim que o desenvolvimento do back end for concluído, pois o docker-compose é indicado para o gerenciamento de múltiplos containers e comunicação entre eles, sendo no caso um container contendo a aplicação do crediário e outro container com o banco de dados rodando.
 
 ## Informações adicionais
 
