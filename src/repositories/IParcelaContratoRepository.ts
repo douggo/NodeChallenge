@@ -9,7 +9,7 @@ interface ICriaParcelasContratoDTO {
 }
 
 interface IParcelasContratoRepository {
-  create(contratoId: string, indice: number, parcelas: ParcelaContrato): void;
+  create(contratoId: string, indice: number, parcelas: ICriaParcelasContratoDTO): void;
   getAll(contratoId: string): ParcelaContrato[];
   findById(contratoId: string, parcelaId: number): ParcelaContrato;
 }

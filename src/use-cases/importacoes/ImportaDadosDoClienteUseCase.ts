@@ -1,6 +1,6 @@
 import { ICriaContratosDTO } from "../../repositories/IContratosRepository";
+import { CriaClienteService } from "./services/CriaClienteService";
 import { ImportaContratosService } from "./services/ImportaContratosService";
-import { CriaClienteService } from "./services/criaClienteService";
 
 class importaDadosDoClienteUseCase {
 

@@ -8,12 +8,14 @@ class ImportaContratosService {
 
   importaContratos(contratos: ICriaContratosDTO[]): void {
     contratos.forEach((contrato: ICriaContratosDTO, indice: number) => {
+      console.log(`(${indice}) - Contrato ${contrato.contratoId} sendo importado...`);
       this.contratosRepository.create(contrato);
       if (!this.doesContratoHaveParcelas(contrato.parcelas)) {
         return;
       }
-      contrato.parcelas.forEach((parcela: ParcelaContrato, indice: number) => {
-        this.parcelasContratoRepository.create(contrato.contratoId, indice, parcela);
+      contrato.parcelas.forEach((parcela: ICriaParcelasContratoDTO, indiceParcela: number) => {
+        console.log(`Incluindo ${indiceParcela}a parcela do contrato`)
+        this.parcelasContratoRepository.create(contrato.contratoId, indiceParcela, parcela);
       });
     });
   }
