@@ -1,0 +1,5 @@
+class Contrato {
+
+}
+
+export { Contrato };
