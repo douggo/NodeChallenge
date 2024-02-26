@@ -1,19 +1,23 @@
 import { Contrato } from "../models/Contrato";
 import { ICriaParcelasContratoDTO } from "./IParcelaContratoRepository";
 
+interface IRequestContratos {
+  contratos: ICriaContratosDTO[],
+}
+
 interface ICriaContratosDTO {
-  contratoId: string,
+  contrato: string,
   data: string,
-  valorTotal: number,
-  valorEntrada: number,
-  valorFinanciado: number,
+  valortotal: number,
+  valorentrada: number,
+  valorfinanciado: number,
   parcelas: ICriaParcelasContratoDTO[]
 };
 
 interface IContratosRepository {
-  create(contratos: ICriaContratosDTO): void;
-  getAll(clienteId: string): Contrato[];
-  findById(contratoId: string): Contrato;
+  create(clienteId:number, contratos: ICriaContratosDTO): void;
+  getAll(clienteId: string): Promise<Contrato[]>;
+  findById(contratoId: string): Promise<Contrato>;
 };
 
-export { ICriaContratosDTO, IContratosRepository };
+export { IRequestContratos, ICriaContratosDTO, IContratosRepository };
