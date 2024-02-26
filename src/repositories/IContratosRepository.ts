@@ -1,3 +1,4 @@
+import { QueryConfig } from "pg";
 import { Contrato } from "../models/Contrato";
 import { ICriaParcelasContratoDTO } from "./IParcelaContratoRepository";
 
@@ -15,6 +16,8 @@ interface ICriaContratosDTO {
 };
 
 interface IContratosRepository {
+  createInsertQueryConfig(clienteId: number, contrato: ICriaContratosDTO): QueryConfig;
+  complexCreate(queries: QueryConfig[]): Promise<void>;
   create(clienteId:number, contratos: ICriaContratosDTO): void;
   getAll(clienteId: string): Promise<Contrato[]>;
   findById(contratoId: string): Promise<Contrato>;

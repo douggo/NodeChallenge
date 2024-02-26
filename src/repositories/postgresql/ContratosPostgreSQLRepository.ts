@@ -1,3 +1,4 @@
+import { QueryConfig } from "pg";
 import { Contrato } from "../../models/Contrato";
 import { IContratosRepository, ICriaContratosDTO } from "../IContratosRepository";
 import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
@@ -18,6 +19,25 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
 
   constructor(private database: PostgreSQLQuery) {}
   
+  createInsertQueryConfig(clienteId: number, contrato: ICriaContratosDTO): QueryConfig {
+    return this.database.createInsertCommand(
+        ContratosPostgreSQLRepository.TABLENAME,
+        ContratosPostgreSQLRepository.COLUMNS,
+        [
+          contrato.contrato,
+          clienteId,
+          contrato.data,
+          contrato.valortotal,
+          contrato.valorentrada,
+          contrato.valorfinanciado
+        ]
+    );
+  }
+
+  async complexCreate(queries: QueryConfig[]): Promise<void> {
+    await this.database.insertMultipleDataWithTransaction(queries);
+  }
+
   create(clienteId: number, contrato: ICriaContratosDTO): void {
     this.database.insertData(
       ContratosPostgreSQLRepository.TABLENAME, 

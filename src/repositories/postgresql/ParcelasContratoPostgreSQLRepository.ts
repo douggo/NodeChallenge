@@ -1,12 +1,24 @@
+import { QueryConfig } from "pg";
 import { ParcelaContrato } from "../../models/ParcelaContrato";
 import { ICriaParcelasContratoDTO, IParcelasContratoRepository } from "../IParcelaContratoRepository";
 import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
+
+interface ParcelasContratoDB {
+  id: number,
+  contrato_id: string,
+  valorVencimento: number,
+  dataVencimento: string,
+  dataUltimoPagamento: string,
+  totalPago: number,
+  capitalAberto: number
+}
 
 class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepository {
   
   private static TABLENAME:string = "parcelas_contrato";
   private static COLUMNS: string[] = [ 
-    "id", 
+    "id",
+    "contrato_id", 
     "valor_vencimento", 
     "data_vencimento",
     "data_ultimo_pagamento",
@@ -16,14 +28,80 @@ class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepositor
 
   constructor(private database: PostgreSQLQuery) {}
 
-  create(contratoId: string, indice: number, parcelas: ICriaParcelasContratoDTO): void {
-    throw new Error("Method not implemented.");
+  createInsertQueryConfig(contratoId: string, indice: number, parcela: ICriaParcelasContratoDTO): QueryConfig {
+    return this.database.createInsertCommand(
+        ParcelasContratoPostgreSQLRepository.TABLENAME,
+        ParcelasContratoPostgreSQLRepository.COLUMNS,
+        [
+          indice,
+          contratoId,
+          parcela.valorvencimento,
+          parcela.datavencimento,
+          parcela.dataultimopagamento,
+          parcela.totalpago,
+          parcela.capitalaberto
+        ]
+    );
   }
-  getAll(contratoId: string): ParcelaContrato[] {
-    throw new Error("Method not implemented.");
+
+  create(contratoId: string, indice: number, parcela: ICriaParcelasContratoDTO): void {
+    this.database.insertData(
+      ParcelasContratoPostgreSQLRepository.TABLENAME,
+      ParcelasContratoPostgreSQLRepository.COLUMNS,
+      [
+        indice,
+        contratoId,
+        parcela.valorvencimento,
+        parcela.datavencimento,
+        parcela.dataultimopagamento,
+        parcela.totalpago,
+        parcela.capitalaberto
+      ]
+    );
   }
-  findById(contratoId: string, parcelaId: number): ParcelaContrato {
-    throw new Error("Method not implemented.");
+
+  async getAll(contratoId: string): Promise<ParcelaContrato[]> {
+    const result: any[] = await this.database.selectData(
+      ParcelasContratoPostgreSQLRepository.TABLENAME,
+      ParcelasContratoPostgreSQLRepository.COLUMNS,
+      `AND contrato_id = ${contratoId}`
+    );
+
+    const parcelas: ParcelaContrato[] = result.map((parcelaDados: ParcelasContratoDB, indice) => {
+      return new ParcelaContrato(
+        parcelaDados.id,
+        parcelaDados.contrato_id,
+        parcelaDados.valorVencimento,
+        parcelaDados.dataVencimento,
+        parcelaDados.dataUltimoPagamento,
+        parcelaDados.totalPago,
+        parcelaDados.capitalAberto
+      );
+    });
+    return parcelas;
+  }
+
+  async findById(contratoId: string, parcelaId: number): Promise<ParcelaContrato> {
+    const result: any[] = await this.database.selectData(
+      ParcelasContratoPostgreSQLRepository.TABLENAME,
+      ParcelasContratoPostgreSQLRepository.COLUMNS,
+      `AND (contrato_id = ${contratoId} AND id = ${parcelaId})`
+    );
+    const parcela: ParcelaContrato|undefined = result.map((parcelaDados: ParcelasContratoDB, indice) => {
+      return new ParcelaContrato(
+        parcelaDados.id,
+        parcelaDados.contrato_id,
+        parcelaDados.valorVencimento,
+        parcelaDados.dataVencimento,
+        parcelaDados.dataUltimoPagamento,
+        parcelaDados.totalPago,
+        parcelaDados.capitalAberto
+      );
+    }).shift();
+    if (parcela == undefined) {
+      throw new Error('Parcela não encontrada!');
+    }
+    return parcela;
   }
 
 }

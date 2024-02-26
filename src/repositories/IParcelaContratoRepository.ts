@@ -1,17 +1,19 @@
+import { QueryConfig } from "pg";
 import { ParcelaContrato } from "../models/ParcelaContrato";
 
 interface ICriaParcelasContratoDTO {
-  valorVencimento: number,
-  dataVencimento: string,
-  dataUltimoPagamento: string,
-  totalPago: number,
-  capitalAberto: number
+  valorvencimento: number,
+  datavencimento: string,
+  dataultimopagamento: string,
+  totalpago: number,
+  capitalaberto: number
 }
 
 interface IParcelasContratoRepository {
+  createInsertQueryConfig(contratoId: string, indice: number, parcela: ICriaParcelasContratoDTO): QueryConfig;
   create(contratoId: string, indice: number, parcelas: ICriaParcelasContratoDTO): void;
-  getAll(contratoId: string): ParcelaContrato[];
-  findById(contratoId: string, parcelaId: number): ParcelaContrato;
+  getAll(contratoId: string): Promise<ParcelaContrato[]>;
+  findById(contratoId: string, parcelaId: number): Promise<ParcelaContrato>;
 }
 
 export { ICriaParcelasContratoDTO, IParcelasContratoRepository };

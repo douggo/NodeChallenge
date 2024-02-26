@@ -4,19 +4,17 @@ import { ParcelasContratoPostgreSQLRepository } from "../../repositories/postgre
 import { PostgreSQLQuery } from "../../repositories/postgresql/database/PostgreSQLQuery";
 import { ImportaDadosDoClienteController } from "./ImportaDadosDoClienteController";
 import { ImportaDadosDoClienteUseCase } from "./ImportaDadosDoClienteUseCase";
-import { CriaClienteService } from "./services/CriaClienteService";
 import { ImportaContratosService } from "./services/ImportaContratosService";
 
 const postgreSQLQuery = PostgreSQLQuery.getInstance();
 
-//const clientesRespository = new ClientesPostgreSQLRepository(postgreSQLQuery);
+const clientesRespository = new ClientesPostgreSQLRepository(postgreSQLQuery);
 const contratosRepository = new ContratosPostgreSQLRepository(postgreSQLQuery);
 const parcelasContratoRepository = new ParcelasContratoPostgreSQLRepository(postgreSQLQuery);
 
-//const criaClienteService = new CriaClienteService(clientesRespository);
-const importaContratosService = new ImportaContratosService(contratosRepository, parcelasContratoRepository);
+const importaContratosService = new ImportaContratosService(clientesRespository, contratosRepository, parcelasContratoRepository);
 
-const importaDadosDoClienteUseCase = new ImportaDadosDoClienteUseCase(/*criaClienteService, */importaContratosService);
+const importaDadosDoClienteUseCase = new ImportaDadosDoClienteUseCase(importaContratosService);
 const importaDadosDoClienteController = new ImportaDadosDoClienteController(importaDadosDoClienteUseCase);
 
 export { importaDadosDoClienteController };

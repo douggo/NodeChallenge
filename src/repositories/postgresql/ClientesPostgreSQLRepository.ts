@@ -1,4 +1,4 @@
-import { QueryResultRow } from "pg";
+import { QueryConfig, QueryResultRow } from "pg";
 import { Cliente } from "../../models/Cliente";
 import { IClientesRepository, ICriaClienteDTO } from "../IClientesRepository";
 import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
@@ -15,6 +15,14 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
   private static COLUMNS: string[] = [ "id", "nome" ];
 
   constructor(private database: PostgreSQLQuery) {}
+
+  createInsertQueryConfig({ nome }: ICriaClienteDTO): QueryConfig<any[]> {
+    return this.database.createInsertCommand(
+      ClientesPostgreSQLRepository.TABLENAME,
+      ClientesPostgreSQLRepository.COLUMNS.filter((value: string, indice: number) => value != "id"),
+      [ nome ]
+    );
+  }
 
   async create(valores: ICriaClienteDTO): Promise<void> {
     const result: QueryResultRow = await 

@@ -1,4 +1,4 @@
-import { Pool, QueryResult, QueryResultRow } from 'pg'
+import { Pool, QueryConfig, QueryResult, QueryResultRow } from 'pg'
 
 const pool = new Pool({
   user: 'postgres',
@@ -8,11 +8,35 @@ const pool = new Pool({
   port: 5432,
 });
 
+const createInsertQueryConfig = (tableName: string,columns: string[], values: any[]): QueryConfig => {
+  return {
+    text: `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${values.map((_, index) => '$' + (index + 1)).join(', ')})`,
+    values
+  }
+}
+
+const insertMultipleQueriesWithTransaction = async (queries: QueryConfig[]) => {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+    for (const query of queries) {
+      await client.query(query);
+    }
+    await client.query('COMMIT');
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+
+};
+
 const insert = async (tableName: string,columns: string[], values: any[]): Promise<QueryResult<QueryResultRow>> => {
-  const queryText = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${values.map((_, index) => '$' + (index + 1)).join(', ')})`;
   const client = await pool.connect();
   try {
-    const result = await client.query(queryText, values);
+    const result = await client.query(createInsertQueryConfig(tableName, columns, values));
     return result;
   } finally {
     client.release();
@@ -30,4 +54,4 @@ const select = async (tableName: string, columns: string[], whereClause: string)
   }
 };
 
-export { insert, select };
+export { createInsertQueryConfig, insertMultipleQueriesWithTransaction, insert, select };
