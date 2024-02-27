@@ -1,6 +1,6 @@
 # Crediário Test (back end)
 
-Abaixo estarão informações essenciais para executar o projeto Crediário Test, desenvolvido por Douglas Felipe da Silva como parte do desafio técnico proposto pela entrevista de emprego do Meu Crediário.
+Abaixo estarão informações essenciais para executar o projeto Crediário Test, desenvolvido por Douglas Felipe da Silva.
 
 Para o desenvolvimento do projeto foram utilizadas as seguintes tecnologias:
 
@@ -70,7 +70,62 @@ Seção será desenvolvida assim que o desenvolvimento do back end for concluíd
 
 ## Informações adicionais
 
-A partir de agora você pode utilizar um utilitário para enviar uma requisição POST para a URL `http://localhost:3000/bootup` informando no body o JSON presente no arquivo dentro deste projeto. Após a finalização do processamento do endpoint, será retornando um 200 contendo um body com o mês onde o usuário do json teve o maior valor em aberto e o valor correspondente.
+A partir de agora você pode utilizar um utilitário para enviar uma requisição POST para a URL `http://localhost:3000/importacoes/importaDadosDoCliente` informando no body o JSON presente no arquivo dentro deste projeto. Após a finalização do processamento do endpoint, será retornando um 200 contendo um body com o mês onde o usuário do json teve o maior valor em aberto e o valor correspondente.
+
+Segue abaixo o curl como exemplo da requisição:
+```bash
+curl --location 'http://localhost:3000/importacoes/importaDadosDoCliente' \
+--header 'Content-Type: application/json' \
+--data '{
+    "contratos": [
+        {
+            "parcelas": [
+                {
+                    "valorvencimento": 21.96,
+                    "datavencimento": "2014-02-04",
+                    "dataultimopagamento": "2014-02-03",
+                    "totalpago": 21.96,
+                    "capitalaberto": 0
+                },
+                {
+                    "valorvencimento": 21.96,
+                    "datavencimento": "2014-03-04",
+                    "dataultimopagamento": "2014-03-06",
+                    "totalpago": 21.96,
+                    "capitalaberto": 0
+                },
+                {
+                    "valorvencimento": 21.96,
+                    "datavencimento": "2014-04-04",
+                    "dataultimopagamento": "2014-03-10",
+                    "totalpago": 21.96,
+                    "capitalaberto": 0
+                },
+                {
+                    "valorvencimento": 21.96,
+                    "datavencimento": "2014-05-04",
+                    "dataultimopagamento": "2014-04-07",
+                    "totalpago": 21.96,
+                    "capitalaberto": 0
+                },
+                {
+                    "valorvencimento": 21.96,
+                    "datavencimento": "2014-06-04",
+                    "dataultimopagamento": "2014-04-07",
+                    "totalpago": 21.96,
+                    "capitalaberto": 0
+                }
+            ],
+            "contrato": "0482599770000000000001669920131221",
+            "data": "2013-12-21",
+            "valortotal": 109.80000000000001,
+            "valorentrada": 0,
+            "valorfinanciado": 109.80000000000001
+        }
+    ]
+}
+'
+```
 
 A partir disso você poderá também verificar todos os dados disponíveis no banco de dados, como:
 
