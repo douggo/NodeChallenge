@@ -140,7 +140,7 @@ Para tal, abrir um terminal e executar os seguintes comando:
 #! Abrir o container com o banco de dados
 docker exec -it crediario_postgres bash
 #! Entrar no banco através do pSQL
-psql -U usuário -d crediario
+psql -U postgres -p postgres -d crediario
 ```
 
 Com isso você estará no banco do crediário, podendo realizar os SELECTS.
