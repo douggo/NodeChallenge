@@ -60,6 +60,19 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
     return cliente;
   };
 
+  async getMaxIdFromTable(): Promise<number> {
+    const result: any[] = await this.database.selectData(
+      ClientesPostgreSQLRepository.TABLENAME,
+      ['MAX(id)'],
+      ''
+    );
+    const maxId: number|undefined = result.shift();
+    if (maxId === undefined) {
+      return 1;
+    }
+    return maxId;
+  }
+
 }
 
 export { ClientesPostgreSQLRepository };

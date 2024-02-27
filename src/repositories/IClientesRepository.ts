@@ -10,6 +10,7 @@ interface IClientesRepository {
   create({ nome }: ICriaClienteDTO): Promise<void>;
   getAll(): Promise<Cliente[]>;
   findById(clienteId: number): Promise<Cliente>;
+  getMaxIdFromTable(): Promise<number>;
 };
 
 export { ICriaClienteDTO, IClientesRepository };
