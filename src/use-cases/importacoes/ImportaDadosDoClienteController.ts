@@ -5,9 +5,9 @@ class ImportaDadosDoClienteController {
 
   constructor(private importaDadosDoClienteUseCase: ImportaDadosDoClienteUseCase) {}
 
-  handle(request: Request, response: Response): Response {
-    this.importaDadosDoClienteUseCase.execute(request.body);
-    return response.status(201).send();
+  async handle(request: Request, response: Response): Promise<Response> {
+    const requestResponse: any[] = await this.importaDadosDoClienteUseCase.execute(request.body);
+    return response.status(201).send(requestResponse);
   }
 
 }

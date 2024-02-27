@@ -48,7 +48,7 @@ CONJUNTO AS (
   ORDER BY data_operacao
 )
 
-  SELECT "mes/ano",
+  SELECT "mes/ano" as "mes",
 		 (
 		     SELECT (
 				 	    COALESCE(SUM(subselect.valor),0) + principal.valor
@@ -56,10 +56,10 @@ CONJUNTO AS (
 		       FROM CONJUNTO subselect
 		      WHERE subselect.data_operacao <= principal.data_operacao
 			    AND subselect."id_operacao" < principal."id_operacao"
-		 ) AS "em_aberto"
+		 ) AS "total_aberto"
     FROM CONJUNTO principal
    WHERE valor <> 0
-ORDER BY em_aberto DESC
+ORDER BY "total_aberto" DESC
    LIMIT 1;
 `;
 
