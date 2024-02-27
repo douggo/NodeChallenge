@@ -59,16 +59,25 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
       ContratosPostgreSQLRepository.COLUMNS,
       `AND cliente_id = ${clienteId}`
     );
-    const contratos: Contrato[] = result.map((contratoDados: ContratoDB, indice) => {
-      return new Contrato(
-        contratoDados.id,
-        contratoDados.cliente_id,
-        contratoDados.data,
-        contratoDados.valorTotal,
-        contratoDados.valorEntrada,
-        contratoDados.valorFinanciado
-      );
-    });
+    const contratos: Contrato[]|undefined = this.createContratosFromResultQuery(result);
+    if (contratos == undefined) {
+      throw new Error('Erro ao realizar a query para consultar os contratos do cliente!');
+    }
+    return contratos;
+  }
+
+  async getAllAsPageable(clienteId: number, pagina: number, quantidadePorPagina: number): Promise<Contrato[]> {
+    const result: any[] = await this.database.selectDataAsPageable(
+      ContratosPostgreSQLRepository.TABLENAME,
+      ContratosPostgreSQLRepository.COLUMNS,
+      `AND cliente_id = ${clienteId}`,
+      pagina,
+      quantidadePorPagina
+    );
+    const contratos: Contrato[]|undefined = this.createContratosFromResultQuery(result);
+    if (contratos == undefined) {
+      throw new Error('Erro ao realizar a query para consultar os contratos do cliente!');
+    }
     return contratos;
   }
 
@@ -78,7 +87,15 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
       ContratosPostgreSQLRepository.COLUMNS,
       `AND id = ${contratoId}`
     );
-    const contrato: Contrato|undefined = result.map((contratoDados: ContratoDB, indice) => {
+    const contrato: Contrato|undefined = this.createContratosFromResultQuery(result)?.shift();
+    if (contrato == undefined) {
+      throw new Error('Contrato não encontrado!');
+    }
+    return contrato;
+  }
+
+  private createContratosFromResultQuery(result: any[]): Contrato[]|undefined {
+    return result.map((contratoDados: ContratoDB, indice) => {
       return new Contrato(
         contratoDados.id,
         contratoDados.cliente_id,
@@ -87,11 +104,7 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
         contratoDados.valorEntrada,
         contratoDados.valorFinanciado
       );
-    }).shift();
-    if (contrato == undefined) {
-      throw new Error('Contrato não encontrado!');
-    }
-    return contrato;
+    });
   }
 
 }

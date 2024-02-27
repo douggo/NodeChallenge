@@ -10,6 +10,11 @@ class GetContratosService {
     return contratos;
   }
 
+  async getContratosFromClienteAsPageable(clienteId: number, pagina: number, quantidadePorPagina: number): Promise<Contrato[]> {
+    const contratos: Contrato[] = await this.contratosRepository.getAllAsPageable(clienteId, pagina, quantidadePorPagina);
+    return contratos;
+  }
+
   async getContrato(contratoId: string): Promise<Contrato> {
     const contrato: Contrato = await this.contratosRepository.findById(contratoId);
     return contrato;

@@ -1,10 +1,11 @@
 import { QueryConfig, QueryResult, QueryResultRow } from "pg";
-import { complexSelect, createInsertQueryConfig, insert, insertMultipleQueriesWithTransaction, select } from "./database-connection";
+import { complexSelect, createInsertQueryConfig, insert, insertMultipleQueriesWithTransaction, select, selectAsPageable } from "./database-connection";
 
 class PostgreSQLQuery {
 
   private insert;
   private select;
+  private selectAsPageable;
   private insertMultipleQueriesWithTransaction;
   private createInsertQueryConfig;
   private complexSelect;
@@ -13,6 +14,7 @@ class PostgreSQLQuery {
   private constructor() {
     this.insert = insert;
     this.select = select;
+    this.selectAsPageable = selectAsPageable;
     this.insertMultipleQueriesWithTransaction = insertMultipleQueriesWithTransaction;
     this.createInsertQueryConfig = createInsertQueryConfig;
     this.complexSelect = complexSelect;
@@ -31,6 +33,10 @@ class PostgreSQLQuery {
 
   async selectData(tableName: string, columns: string[], whereClause: string): Promise<any[]> {
     return await this.select(tableName, columns, whereClause);
+  }
+  
+  async selectDataAsPageable(tableName: string, columns: string[], whereClause: string, pagina: number, quantidadePorPagina: number): Promise<any[]> {
+    return await this.selectAsPageable(tableName, columns, whereClause, pagina, quantidadePorPagina);
   }
 
   createInsertCommand(tableName: string, columns: string[], values: any[]): QueryConfig {

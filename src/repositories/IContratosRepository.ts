@@ -20,6 +20,7 @@ interface IContratosRepository {
   complexCreate(queries: QueryConfig[]): Promise<void>;
   create(clienteId:number, contratos: ICriaContratosDTO): void;
   getAll(clienteId: number): Promise<Contrato[]>;
+  getAllAsPageable(clienteId: number, pagina: number, quantidadePorPagina: number): Promise<Contrato[]>;
   findById(contratoId: string): Promise<Contrato>;
 };
 

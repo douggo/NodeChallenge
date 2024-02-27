@@ -10,6 +10,11 @@ class GetContratosUseCase {
     return contratos;
   }
 
+  async executeGetAllContratosAsPageable(clienteId: number, pagina: number, quantidadePorPagina: number): Promise<Contrato[]> {
+    const contratos: Promise<Contrato[]> = this.getContratosService.getContratosFromClienteAsPageable(clienteId, pagina, quantidadePorPagina);
+    return contratos;
+  }
+
   async executeGetContrato(contratoId: string): Promise<Contrato> {
     const contrato: Promise<Contrato> = this.getContratosService.getContrato(contratoId);
     return contrato;

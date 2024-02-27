@@ -44,7 +44,7 @@ const insert = async (tableName: string,columns: string[], values: any[]): Promi
 };
 
 const select = async (tableName: string, columns: string[], whereClause: string): Promise<any[]> => {
-  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause}`;
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ORDER BY "data"`;
   const client = await pool.connect();
   try {
     const result = await client.query(queryText, []);
@@ -53,6 +53,17 @@ const select = async (tableName: string, columns: string[], whereClause: string)
     client.release();
   }
 };
+
+const selectAsPageable = async (tableName: string, columns: string[], whereClause: string, pagina: number, quantidadePorPagina: number): Promise<any[]> => {
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ORDER BY "data" OFFSET $1 LIMIT $2`;
+  const client = await pool.connect();
+  try {
+    const result = await client.query(queryText, [pagina, quantidadePorPagina]);
+    return result.rows;
+  } finally {
+    client.release();
+  }
+}
 
 const complexSelect = async (sql: string) => {
   const client = await pool.connect();
@@ -64,4 +75,4 @@ const complexSelect = async (sql: string) => {
   }
 }
 
-export { createInsertQueryConfig, insertMultipleQueriesWithTransaction, insert, select, complexSelect };
+export { createInsertQueryConfig, insertMultipleQueriesWithTransaction, insert, select, selectAsPageable, complexSelect };
