@@ -5,7 +5,7 @@ import { getParcelasContratoController } from "../use-cases/parcelas-contrato";
 const contratosRouter: Router = Router();
 
 contratosRouter.get("/", (request: Request, response: Response) => {
-  return getContratosController.handleGetAllContratos(request, response);
+  return getContratosController.handleGetAllContratosAsPageable(request, response);
 });
 
 contratosRouter.get("/:contratoId", (request: Request, response: Response) => {
