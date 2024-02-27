@@ -1,13 +1,14 @@
 import { Router, Request, Response } from "express";
+import { getContratosController } from "../use-cases/contratos";
 
 const contratosRouter: Router = Router();
 
 contratosRouter.get("/", (request: Request, response: Response) => {
-  response.send("Retorna todos os contratos do cliente [verificar a paginação!]");
+  return getContratosController.handleGetAllContratos(request, response);
 });
 
 contratosRouter.get("/:contratoId", (request: Request, response: Response) => {
-  response.send("Retorna o contrato " + request.params.contratoId);
+  return getContratosController.handleGetContrato(request, response);
 });
 
 contratosRouter.get(":/contratoId/parcelas", (request: Request, response: Response) => {

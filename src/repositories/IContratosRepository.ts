@@ -19,7 +19,7 @@ interface IContratosRepository {
   createInsertQueryConfig(clienteId: number, contrato: ICriaContratosDTO): QueryConfig;
   complexCreate(queries: QueryConfig[]): Promise<void>;
   create(clienteId:number, contratos: ICriaContratosDTO): void;
-  getAll(clienteId: string): Promise<Contrato[]>;
+  getAll(clienteId: number): Promise<Contrato[]>;
   findById(contratoId: string): Promise<Contrato>;
 };
 

@@ -53,7 +53,7 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
     );
   }
 
-  async getAll(clienteId: string): Promise<Contrato[]> {
+  async getAll(clienteId: number): Promise<Contrato[]> {
     const result: any[] = await this.database.selectData(
       ContratosPostgreSQLRepository.TABLENAME,
       ContratosPostgreSQLRepository.COLUMNS,
