@@ -73,6 +73,7 @@ Seção será desenvolvida assim que o desenvolvimento do back end for concluíd
 A partir de agora você pode utilizar um utilitário para enviar uma requisição POST para a URL `http://localhost:3000/importacoes/importaDadosDoCliente` informando no body o JSON presente no arquivo dentro deste projeto. Após a finalização do processamento do endpoint, será retornando um 200 contendo um body com o mês onde o usuário do json teve o maior valor em aberto e o valor correspondente.
 
 Segue abaixo o curl como exemplo da requisição:
+
 ```bash
 curl --location 'http://localhost:3000/importacoes/importaDadosDoCliente' \
 --header 'Content-Type: application/json' \
