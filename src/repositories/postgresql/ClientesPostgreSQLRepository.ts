@@ -66,7 +66,6 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
       ['MAX(id)'],
       ''
     );
-    console.log(result);
     const maxId: number|null = result.shift().max;
     if (maxId === null) {
       return 1;
