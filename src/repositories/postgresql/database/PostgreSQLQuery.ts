@@ -1,5 +1,5 @@
 import { QueryConfig, QueryResult, QueryResultRow } from "pg";
-import { createInsertQueryConfig, insert, insertMultipleQueriesWithTransaction, select } from "./database-connection";
+import { complexSelect, createInsertQueryConfig, insert, insertMultipleQueriesWithTransaction, select } from "./database-connection";
 
 class PostgreSQLQuery {
 
@@ -7,13 +7,15 @@ class PostgreSQLQuery {
   private select;
   private insertMultipleQueriesWithTransaction;
   private createInsertQueryConfig;
+  private complexSelect;
   private static INSTANCE = new PostgreSQLQuery();
 
   private constructor() {
     this.insert = insert;
     this.select = select;
     this.insertMultipleQueriesWithTransaction = insertMultipleQueriesWithTransaction;
-    this.createInsertQueryConfig = createInsertQueryConfig
+    this.createInsertQueryConfig = createInsertQueryConfig;
+    this.complexSelect = complexSelect;
   }
 
   public static getInstance():PostgreSQLQuery {
@@ -37,6 +39,10 @@ class PostgreSQLQuery {
 
   async insertMultipleDataWithTransaction(queries: QueryConfig[]): Promise<void> {
     await this.insertMultipleQueriesWithTransaction(queries);
+  }
+
+  async getDataFromSql(sql: string): Promise<any[]> {
+    return await this.complexSelect(sql);
   }
 
 }

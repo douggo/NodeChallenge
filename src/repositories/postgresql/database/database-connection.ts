@@ -54,4 +54,14 @@ const select = async (tableName: string, columns: string[], whereClause: string)
   }
 };
 
-export { createInsertQueryConfig, insertMultipleQueriesWithTransaction, insert, select };
+const complexSelect = async (sql: string) => {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(sql, []);
+    return result.rows;
+  } finally {
+    client.release();
+  }
+}
+
+export { createInsertQueryConfig, insertMultipleQueriesWithTransaction, insert, select, complexSelect };
