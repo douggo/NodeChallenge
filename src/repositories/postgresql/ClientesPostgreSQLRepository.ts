@@ -66,11 +66,12 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
       ['MAX(id)'],
       ''
     );
-    const maxId: number|undefined = result.shift();
-    if (maxId === undefined) {
+    console.log(result);
+    const maxId: number|null = result.shift().max;
+    if (maxId === null) {
       return 1;
     }
-    return maxId;
+    return maxId + 1;
   }
 
 }

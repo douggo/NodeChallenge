@@ -13,7 +13,6 @@ CREATE TABLE IF NOT EXISTS public.parcelas_contrato
         REFERENCES public.contratos (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        DEFERRABLE INITIALLY DEFERRED
 )
 
 TABLESPACE pg_default;

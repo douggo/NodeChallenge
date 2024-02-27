@@ -1,7 +1,7 @@
 const sqlCreateClientesTable: string = `
 CREATE TABLE IF NOT EXISTS public.clientes
 (
-    id integer NOT NULL DEFAULT nextval('clientes_id_seq'::regclass),
+    id SERIAL NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT clientes_pkey PRIMARY KEY (id)
 )

@@ -14,7 +14,7 @@ class ImportaContratosService {
     const queries: QueryConfig[] = [];
     const clienteId:number = await this.clientesRepository.getMaxIdFromTable();
 
-    queries.push(this.clientesRepository.createInsertQueryConfig({ nome: 'Maria' }));
+    queries.push(this.clientesRepository.createInsertQueryConfig({ nome: 'Doug' }));
 
     contratos.forEach((contrato: ICriaContratosDTO, indice: number) => {
       console.log(`(${++indice}) - Contrato ${contrato.contrato} sendo importado...`);
@@ -27,8 +27,8 @@ class ImportaContratosService {
         queries.push(this.parcelasContratoRepository.createInsertQueryConfig(contrato.contrato, indiceParcela, parcela));
       });
     });
-
-    this.contratosRepository.complexCreate(queries);
+    
+    await this.contratosRepository.complexCreate(queries);
   }
 
   private doesContratoHaveParcelas(parcelas: ICriaParcelasContratoDTO[]): boolean {
