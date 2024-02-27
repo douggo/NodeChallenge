@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import { clientesRouter } from "./clientes.routes";
 import { contratosRouter } from "./contratos.routes";
 import { importacoesRouter } from "./importacoes.routes";
@@ -6,7 +6,6 @@ import { importacoesRouter } from "./importacoes.routes";
 const router: Router = Router();
 
 const clientesEndpoint = "/clientes";
-const contratosEndpoint = clientesEndpoint.concat("/:clienteId/contratos");
 const importacoesEndpoint = "/importacoes";
 
 router.get("/", (request: Request, response: Response) => {
@@ -14,7 +13,7 @@ router.get("/", (request: Request, response: Response) => {
 })
 
 router.use(clientesEndpoint, clientesRouter);
-router.use(contratosEndpoint, contratosRouter);
+router.use(clientesEndpoint, contratosRouter);
 router.use(importacoesEndpoint, importacoesRouter);
 
 export { router };

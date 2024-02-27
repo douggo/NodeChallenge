@@ -6,11 +6,11 @@ import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
 interface ParcelasContratoDB {
   id: number,
   contrato_id: string,
-  valorVencimento: number,
-  dataVencimento: string,
-  dataUltimoPagamento: string,
-  totalPago: number,
-  capitalAberto: number
+  valor_vencimento: number,
+  data_vencimento: string,
+  data_ultimo_pagamento: string,
+  total_pago: number,
+  capital_aberto: number
 }
 
 class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepository {
@@ -64,18 +64,18 @@ class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepositor
     const result: any[] = await this.database.selectData(
       ParcelasContratoPostgreSQLRepository.TABLENAME,
       ParcelasContratoPostgreSQLRepository.COLUMNS,
-      `AND contrato_id = ${contratoId}`
+      `AND contrato_id = '${contratoId}'`
     );
 
     const parcelas: ParcelaContrato[] = result.map((parcelaDados: ParcelasContratoDB, indice) => {
       return new ParcelaContrato(
         parcelaDados.id,
         parcelaDados.contrato_id,
-        parcelaDados.valorVencimento,
-        parcelaDados.dataVencimento,
-        parcelaDados.dataUltimoPagamento,
-        parcelaDados.totalPago,
-        parcelaDados.capitalAberto
+        parcelaDados.valor_vencimento,
+        parcelaDados.data_vencimento,
+        parcelaDados.data_ultimo_pagamento,
+        parcelaDados.total_pago,
+        parcelaDados.capital_aberto
       );
     });
     return parcelas;
@@ -85,17 +85,17 @@ class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepositor
     const result: any[] = await this.database.selectData(
       ParcelasContratoPostgreSQLRepository.TABLENAME,
       ParcelasContratoPostgreSQLRepository.COLUMNS,
-      `AND (contrato_id = ${contratoId} AND id = ${parcelaId})`
+      `AND (contrato_id = '${contratoId}' AND id = ${parcelaId})`
     );
     const parcela: ParcelaContrato|undefined = result.map((parcelaDados: ParcelasContratoDB, indice) => {
       return new ParcelaContrato(
         parcelaDados.id,
         parcelaDados.contrato_id,
-        parcelaDados.valorVencimento,
-        parcelaDados.dataVencimento,
-        parcelaDados.dataUltimoPagamento,
-        parcelaDados.totalPago,
-        parcelaDados.capitalAberto
+        parcelaDados.valor_vencimento,
+        parcelaDados.data_vencimento,
+        parcelaDados.data_ultimo_pagamento,
+        parcelaDados.total_pago,
+        parcelaDados.capital_aberto
       );
     }).shift();
     if (parcela == undefined) {

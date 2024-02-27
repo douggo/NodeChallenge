@@ -10,8 +10,8 @@ class ImportaDadosDoClienteUseCase {
               private consultaMesComMaiorValorEmAbertoService: ConsultaMesComMaiorValorEmAbertoService) {}
 
   async execute(contratos: IRequestContratos): Promise<any[]> {
-    this.criaTabelasIniciaisService.criaTabelas();
-    this.importaContratosService.importaContratos(contratos);
+    //this.criaTabelasIniciaisService.criaTabelas();
+    //this.importaContratosService.importaContratos(contratos);
     const mesComMaiorValorEmAberto: any = await this.consultaMesComMaiorValorEmAbertoService.getMesAndValorEmAberto();
     return mesComMaiorValorEmAberto;
   }

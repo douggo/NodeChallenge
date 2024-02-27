@@ -44,10 +44,13 @@ const insert = async (tableName: string,columns: string[], values: any[]): Promi
 };
 
 const select = async (tableName: string, columns: string[], whereClause: string): Promise<any[]> => {
-  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ORDER BY "data"`;
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause}`;
   const client = await pool.connect();
   try {
     const result = await client.query(queryText, []);
+    if (result.rowCount == 0) {
+      return [{}];
+    }
     return result.rows;
   } finally {
     client.release();
@@ -55,10 +58,13 @@ const select = async (tableName: string, columns: string[], whereClause: string)
 };
 
 const selectAsPageable = async (tableName: string, columns: string[], whereClause: string, pagina: number, quantidadePorPagina: number): Promise<any[]> => {
-  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ORDER BY "data" OFFSET $1 LIMIT $2`;
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} OFFSET $1 LIMIT $2`;
   const client = await pool.connect();
   try {
     const result = await client.query(queryText, [pagina, quantidadePorPagina]);
+    if (result.rowCount == 0) {
+      return [{}];
+    }
     return result.rows;
   } finally {
     client.release();
@@ -69,6 +75,9 @@ const complexSelect = async (sql: string) => {
   const client = await pool.connect();
   try {
     const result = await client.query(sql, []);
+    if (result.rowCount == 0) {
+      return [{}];
+    }
     return result.rows;
   } finally {
     client.release();

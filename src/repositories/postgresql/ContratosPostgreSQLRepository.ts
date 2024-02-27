@@ -7,9 +7,9 @@ interface ContratoDB {
   id: string,
   cliente_id: number;
   data: string,
-  valorTotal: number,
-  valorEntrada: number,
-  valorFinanciado: number
+  valor_total: number,
+  valor_entrada: number,
+  valor_financiado: number
 }
 
 class ContratosPostgreSQLRepository implements IContratosRepository {
@@ -85,7 +85,7 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
     const result: any[] = await this.database.selectData(
       ContratosPostgreSQLRepository.TABLENAME,
       ContratosPostgreSQLRepository.COLUMNS,
-      `AND id = ${contratoId}`
+      `AND id = '${contratoId}'`
     );
     const contrato: Contrato|undefined = this.createContratosFromResultQuery(result)?.shift();
     if (contrato == undefined) {
@@ -100,9 +100,9 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
         contratoDados.id,
         contratoDados.cliente_id,
         contratoDados.data,
-        contratoDados.valorTotal,
-        contratoDados.valorEntrada,
-        contratoDados.valorFinanciado
+        contratoDados.valor_total,
+        contratoDados.valor_entrada,
+        contratoDados.valor_financiado
       );
     });
   }
