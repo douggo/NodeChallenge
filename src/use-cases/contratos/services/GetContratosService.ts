@@ -20,6 +20,11 @@ class GetContratosService {
     return contrato;
   }
 
+  async getValorEndividamento(contratoId: string): Promise<any> {
+    const valorEndividamento: any = await this.contratosRepository.getValorEndividamento(contratoId);
+    return valorEndividamento;
+  }
+
 }
 
 export { GetContratosService };

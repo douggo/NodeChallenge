@@ -24,6 +24,11 @@ class GetContratosController {
     return response.status(200).send(requestResponse);
   }
 
+  async handleGetEndividamentoFromContrato(request: Request, response: Response): Promise<Response> {
+    const requestResponse: any = await this.getContratosUseCase.executeGetEndividamentoFromContrato(request.params.contratoId);
+    return response.status(200).send(requestResponse);
+  }
+
 }
 
 export { GetContratosController };

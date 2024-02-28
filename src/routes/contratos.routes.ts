@@ -139,6 +139,49 @@ contratosRouter.get("/:clienteId/contratos/:contratoId", (request: Request, resp
 
 /**
  * @swagger
+ * /clientes/{clienteId}/contratos/{contratoId}/endividamento:
+ *   get:
+ *     summary: Traz o valor em aberto das parcelas que ainda náo foram pagas
+ *     tags: [Contratos]
+ *     description: Traz o valor em aberto das parcelas que ainda náo foram pagas.
+ *     parameters:
+ *       - in: path
+ *         name: clienteId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do cliente desejado.
+ *       - in: path
+ *         name: contratoId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do contrato desejado.
+ *     responses:
+ *       200:
+ *         description: Contrato
+ *         content:
+ *            application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 contratos:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       em_aberto:
+ *                         type: string
+ *                         description: Valor em aberto.
+ *             example:
+ *               em_aberto: "229.8"
+*/
+contratosRouter.get("/:clienteId/contratos/:contratoId/endividamento", (request: Request, response: Response) => {
+  return getContratosController.handleGetEndividamentoFromContrato(request, response);
+});
+
+/**
+ * @swagger
  * /clientes/{clienteId}/contratos/{contratoId}/parcelas:
  *   get:
  *     summary: Recupera todas as parcelas de um contrato

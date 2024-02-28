@@ -2,6 +2,7 @@ import { QueryConfig } from "pg";
 import { Contrato } from "../../models/Contrato";
 import { IContratosRepository, ICriaContratosDTO } from "../IContratosRepository";
 import { PostgreSQLQuery } from "./database/PostgreSQLQuery";
+import { sqlGetValorEndividamentoContrato } from "../SQL/sqlGetValorEndividamentoContrato";
 
 interface ContratoDB {
   id: string,
@@ -18,6 +19,11 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
   private static COLUMNS: string[] = [ "id", "cliente_id", "data", "valor_total", "valor_entrada", "valor_financiado" ];
 
   constructor(private database: PostgreSQLQuery) {}
+  
+  async getValorEndividamento(contratoId: string): Promise<any> {
+    const valorEndividamento = await this.database.getDataFromSql(sqlGetValorEndividamentoContrato.concat(`WHERE c.id = '${contratoId}';`));
+    return valorEndividamento.shift();
+  }
   
   createInsertQueryConfig(clienteId: number, contrato: ICriaContratosDTO): QueryConfig {
     return this.database.createInsertCommand(

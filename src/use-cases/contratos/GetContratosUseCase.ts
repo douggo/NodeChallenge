@@ -20,6 +20,11 @@ class GetContratosUseCase {
     return contrato;
   }
 
+  async executeGetEndividamentoFromContrato(contratoId: string): Promise<any> {
+    const valorEndividamento: Promise<any> = this.getContratosService.getValorEndividamento(contratoId);
+    return valorEndividamento;
+  }
+
 }
 
 export { GetContratosUseCase };

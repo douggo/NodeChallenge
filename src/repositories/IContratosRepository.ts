@@ -22,6 +22,7 @@ interface IContratosRepository {
   getAll(clienteId: number): Promise<Contrato[]>;
   getAllAsPageable(clienteId: number, pagina: number, quantidadePorPagina: number): Promise<Contrato[]>;
   findById(contratoId: string): Promise<Contrato>;
+  getValorEndividamento(contratoId: string): Promise<any>;
 };
 
 export { IRequestContratos, ICriaContratosDTO, IContratosRepository };
