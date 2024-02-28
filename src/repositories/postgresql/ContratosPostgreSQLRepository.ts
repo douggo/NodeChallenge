@@ -63,7 +63,8 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
     const result: any[] = await this.database.selectData(
       ContratosPostgreSQLRepository.TABLENAME,
       ContratosPostgreSQLRepository.COLUMNS,
-      `AND cliente_id = ${clienteId}`
+      `AND cliente_id = ${clienteId}`,
+      ''
     );
     const contratos: Contrato[]|undefined = this.createContratosFromResultQuery(result);
     if (contratos == undefined) {
@@ -77,6 +78,7 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
       ContratosPostgreSQLRepository.TABLENAME,
       ContratosPostgreSQLRepository.COLUMNS,
       `AND cliente_id = ${clienteId}`,
+      `"data"`,
       pagina,
       quantidadePorPagina
     );
@@ -91,7 +93,8 @@ class ContratosPostgreSQLRepository implements IContratosRepository {
     const result: any[] = await this.database.selectData(
       ContratosPostgreSQLRepository.TABLENAME,
       ContratosPostgreSQLRepository.COLUMNS,
-      `AND id = '${contratoId}'`
+      `AND id = '${contratoId}'`,
+      ''
     );
     const contrato: Contrato|undefined = this.createContratosFromResultQuery(result)?.shift();
     if (contrato == undefined) {

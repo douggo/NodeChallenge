@@ -15,7 +15,7 @@ class GetParcelasContratoController {
   async executeGetParcelaFromContrato(request: Request, response: Response): Promise<Response> {
     const { contratoId, parcelaId } = request.params;
     const parcela: ParcelaContrato = await this.getParcelasContratoUseCase.handleGetParcelaFromContrato(contratoId, parseInt(parcelaId));
-    return response.status(200).send({ 'parcela': parcela });
+    return response.status(200).send(parcela);
   }
 
 }

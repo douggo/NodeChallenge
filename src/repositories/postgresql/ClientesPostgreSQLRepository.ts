@@ -37,7 +37,8 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
     const result: any[] = await this.database.selectData(
       ClientesPostgreSQLRepository.TABLENAME,
       ClientesPostgreSQLRepository.COLUMNS,
-      ''
+      '',
+      'ORDER BY nome'
     );
     const clientes: Cliente[] = result.map((clienteDados: ClienteDB, indice) => {
       return new Cliente(clienteDados.id, clienteDados.nome);
@@ -49,7 +50,8 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
     const result: any[] = await this.database.selectData(
       ClientesPostgreSQLRepository.TABLENAME,
       ClientesPostgreSQLRepository.COLUMNS,
-      `AND id = ${clienteId}`
+      `AND id = ${clienteId}`,
+      ''
     );
     const cliente: Cliente|undefined = result.map((clienteDados: ClienteDB, indice) => {
       return new Cliente(clienteDados.id, clienteDados.nome);
@@ -64,6 +66,7 @@ class ClientesPostgreSQLRepository implements IClientesRepository {
     const result: any[] = await this.database.selectData(
       ClientesPostgreSQLRepository.TABLENAME,
       ['MAX(id)'],
+      '',
       ''
     );
     const maxId: number|null = result.shift().max;

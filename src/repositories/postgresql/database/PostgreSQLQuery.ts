@@ -31,12 +31,12 @@ class PostgreSQLQuery {
     return await this.insert(tableName, columns, values); 
   }
 
-  async selectData(tableName: string, columns: string[], whereClause: string): Promise<any[]> {
-    return await this.select(tableName, columns, whereClause);
+  async selectData(tableName: string, columns: string[], whereClause: string, orderBy: string): Promise<any[]> {
+    return await this.select(tableName, columns, whereClause, orderBy);
   }
   
-  async selectDataAsPageable(tableName: string, columns: string[], whereClause: string, pagina: number, quantidadePorPagina: number): Promise<any[]> {
-    return await this.selectAsPageable(tableName, columns, whereClause, pagina, quantidadePorPagina);
+  async selectDataAsPageable(tableName: string, columns: string[], whereClause: string, orderBy: string, pagina: number, quantidadePorPagina: number): Promise<any[]> {
+    return await this.selectAsPageable(tableName, columns, whereClause, orderBy, pagina, quantidadePorPagina);
   }
 
   createInsertCommand(tableName: string, columns: string[], values: any[]): QueryConfig {

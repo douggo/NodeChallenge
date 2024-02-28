@@ -43,8 +43,8 @@ const insert = async (tableName: string,columns: string[], values: any[]): Promi
   }
 };
 
-const select = async (tableName: string, columns: string[], whereClause: string): Promise<any[]> => {
-  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause}`;
+const select = async (tableName: string, columns: string[], whereClause: string, orderBy: string): Promise<any[]> => {
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ${orderBy}`;
   const client = await pool.connect();
   try {
     const result = await client.query(queryText, []);
@@ -57,8 +57,8 @@ const select = async (tableName: string, columns: string[], whereClause: string)
   }
 };
 
-const selectAsPageable = async (tableName: string, columns: string[], whereClause: string, pagina: number, quantidadePorPagina: number): Promise<any[]> => {
-  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} OFFSET $1 LIMIT $2`;
+const selectAsPageable = async (tableName: string, columns: string[], whereClause: string, orderBy: string, pagina: number, quantidadePorPagina: number): Promise<any[]> => {
+  const queryText = `SELECT ${columns.join(', ')} FROM ${tableName} WHERE TRUE ${whereClause} ORDER BY ${orderBy} DESC OFFSET $1 LIMIT $2`;
   const client = await pool.connect();
   try {
     const result = await client.query(queryText, [pagina, quantidadePorPagina]);

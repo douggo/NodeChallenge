@@ -64,7 +64,8 @@ class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepositor
     const result: any[] = await this.database.selectData(
       ParcelasContratoPostgreSQLRepository.TABLENAME,
       ParcelasContratoPostgreSQLRepository.COLUMNS,
-      `AND contrato_id = '${contratoId}'`
+      `AND contrato_id = '${contratoId}'`,
+      'ORDER BY id'
     );
 
     const parcelas: ParcelaContrato[] = result.map((parcelaDados: ParcelasContratoDB, indice) => {
@@ -85,7 +86,8 @@ class ParcelasContratoPostgreSQLRepository implements IParcelasContratoRepositor
     const result: any[] = await this.database.selectData(
       ParcelasContratoPostgreSQLRepository.TABLENAME,
       ParcelasContratoPostgreSQLRepository.COLUMNS,
-      `AND (contrato_id = '${contratoId}' AND id = ${parcelaId})`
+      `AND (contrato_id = '${contratoId}' AND id = ${parcelaId})`,
+      ''
     );
     const parcela: ParcelaContrato|undefined = result.map((parcelaDados: ParcelasContratoDB, indice) => {
       return new ParcelaContrato(
