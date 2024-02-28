@@ -8,12 +8,12 @@ class GetClientesController {
 
   async handleGetAllClientes(request: Request, response: Response): Promise<Response> {
     const requestResponse: any[] = await this.getClientesUseCase.executeGetAllClientes();
-    return response.status(201).send({'clientes': requestResponse});
+    return response.status(200).send({'clientes': requestResponse});
   }
 
   async handleGetCliente(request: Request, response: Response): Promise<Response> {
     const requestResponse: Cliente = await this.getClientesUseCase.executeGetCliente(parseInt(request.params.clienteId));
-    return response.status(201).send({'cliente': requestResponse});
+    return response.status(200).send(requestResponse);
   }
 
 }

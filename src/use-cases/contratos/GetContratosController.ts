@@ -21,7 +21,7 @@ class GetContratosController {
 
   async handleGetContrato(request: Request, response: Response): Promise<Response> {
     const requestResponse: Contrato = await this.getContratosUseCase.executeGetContrato(request.params.contratoId);
-    return response.status(201).send({ 'contrato': requestResponse });
+    return response.status(201).send(requestResponse);
   }
 
 }
