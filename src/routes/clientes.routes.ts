@@ -8,6 +8,7 @@ const clientesRouter: Router = Router();
  * /clientes/:
  *   get:
  *     summary: Recupera todos os clientes cadastrados no Crediário
+ *     tags: [Clientes]
  *     description: Recupera uma lista de todos os clientes cadastrados no Crediário.
  *     responses:
  *       200:
@@ -42,6 +43,7 @@ clientesRouter.get("/", (request: Request, response: Response) => {
  * /clientes/{clienteId}:
  *   get:
  *     summary: Recupera dados de um cliente em específico
+ *     tags: [Clientes]
  *     description: Recupera um objeto JavaScript de um cliente em específico.
  *     parameters:
  *       - in: path

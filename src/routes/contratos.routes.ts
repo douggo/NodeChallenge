@@ -9,6 +9,7 @@ const contratosRouter: Router = Router();
  * /clientes/{clienteId}/contratos/:
  *   get:
  *     summary: Recupera todos os contratos cadastrados do cliente no Crediário
+ *     tags: [Contratos]
  *     description: Recupera uma lista de todos os contratos do cliente no Crediário.
  *     parameters:
  *       - in: query
@@ -78,6 +79,7 @@ contratosRouter.get("/:clienteId/contratos", (request: Request, response: Respon
  * /clientes/{clienteId}/contratos/{contratoId}:
  *   get:
  *     summary: Recupera um contrato desejado
+ *     tags: [Contratos]
  *     description: Recupera um contrato desejado.
  *     parameters:
  *       - in: path
@@ -140,6 +142,7 @@ contratosRouter.get("/:clienteId/contratos/:contratoId", (request: Request, resp
  * /clientes/{clienteId}/contratos/{contratoId}/parcelas:
  *   get:
  *     summary: Recupera todas as parcelas de um contrato
+ *     tags: [Contratos]
  *     description: Recupera uma lista de todas as parcelas de um contrato.
  *     parameters:
  *       - in: path
@@ -207,6 +210,7 @@ contratosRouter.get("/:clienteId/contratos/:contratoId/parcelas", (request: Requ
  * /clientes/{clienteId}/contratos/{contratoId}/parcelas/{parcelaId}:
  *   get:
  *     summary: Recupera uma parcela de um contrato
+ *     tags: [Contratos]
  *     description: Recupera uma parcela de um contrato.
  *     parameters:
  *       - in: path

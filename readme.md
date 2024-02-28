@@ -64,6 +64,8 @@ npm run
 
 Ao finalizar a execução dos comandos acima, teremos o sistema rodando localmente pronto para uso sem a utilização do docker-compose.yml.
 
+Clique [aqui](http://localhost:3000/docs) para acessar a documentação desenvolvida em Swagger contendo todos os endpoints desenvolvidos.
+
 ## Para subir o projeto com o docker-compose.yml
 
 Seção será desenvolvida assim que o desenvolvimento do back end for concluído, pois o docker-compose é indicado para o gerenciamento de múltiplos containers e comunicação entre eles, sendo no caso um container contendo a aplicação do crediário e outro container com o banco de dados rodando.

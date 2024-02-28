@@ -8,7 +8,7 @@ class GetContratosController {
 
   async handleGetAllContratos(request: Request, response: Response): Promise<Response> {
     const requestResponse: Contrato[] = await this.getContratosUseCase.executeGetAllContratos(parseInt(request.params.clientId));
-    return response.status(201).send({'contratos': requestResponse});
+    return response.status(200).send({'contratos': requestResponse});
   }
 
   async handleGetAllContratosAsPageable(request: Request, response: Response): Promise<Response> {
@@ -16,12 +16,12 @@ class GetContratosController {
     const quantidadePorPagina: number = parseInt(request.query.quantidadePorPagina as string);
     const clienteId: number = parseInt(request.params.clienteId);
     const requestResponse: Contrato[] = await this.getContratosUseCase.executeGetAllContratosAsPageable(clienteId, pagina, quantidadePorPagina);
-    return response.status(201).send({ 'contratos': requestResponse });
+    return response.status(200).send({ 'contratos': requestResponse });
   }
 
   async handleGetContrato(request: Request, response: Response): Promise<Response> {
     const requestResponse: Contrato = await this.getContratosUseCase.executeGetContrato(request.params.contratoId);
-    return response.status(201).send(requestResponse);
+    return response.status(200).send(requestResponse);
   }
 
 }
